@@ -1,17 +1,22 @@
 package com.example.claseanidadasyinternasenum
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import android.widget.RadioButton
 import android.widget.TextView
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
     var etn_Valor1:EditText?=null
     lateinit var etn_Valor2:EditText
     lateinit var tv_resultado:TextView
-
-
+    lateinit var rbSumar:RadioButton
+    lateinit var rbRestar:RadioButton
+    lateinit var rbMultiplicar:RadioButton
+    lateinit var rbDividir:RadioButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +32,10 @@ class MainActivity : AppCompatActivity() {
         etn_Valor1 = findViewById(R.id.etn_Valor1)
         etn_Valor2 = findViewById(R.id.etn_Valor2)
         tv_resultado = findViewById(R.id.tv_Resuldado)
+        rbSumar = findViewById(R.id.rb_Sumar)
+        rbRestar = findViewById(R.id.rb_Restar)
+        rbMultiplicar = findViewById(R.id.rb_Multiplicar)
+        rbDividir = findViewById(R.id.rb_Division)
 
     }
 
@@ -167,12 +176,39 @@ class MainActivity : AppCompatActivity() {
         val valor1_Int = valor1_String.toInt()
         val valor2_Int = Integer.parseInt(valor2_String)
 
-        val suma = valor1_Int+valor2_Int
-        val resultado = suma.toString()
-        tv_resultado.setText(resultado)
+
+
+        if(rbSumar.isChecked==true){
+            val suma = valor1_Int+valor2_Int
+            val resultado = suma.toString()
+            tv_resultado.setText(resultado)
+        }else if(rbRestar.isChecked==true){
+            val resta = valor1_Int-valor2_Int
+            val resultado = resta.toString()
+            tv_resultado.setText(resultado)
+        }else if(rbMultiplicar.isChecked==true){
+            val multiplicar = valor1_Int*valor2_Int
+            val resultado = multiplicar.toString()
+            tv_resultado.setText(resultado)
+        }else if(rbDividir.isChecked==true){
+            val valor1_Dou = valor1_Int.toDouble()
+            val valor2_Dou = valor2_Int.toDouble()
+            if(valor1_Dou != 0.0 && valor2_Dou != 0.0){
+                val division = valor1_Dou/valor2_Dou
+                val resultado = division.toString()
+                tv_resultado.setText(resultado)
+            }else{
+                Toast.makeText(this,"No puedes dividir entre 0",Toast.LENGTH_LONG).show()
+            }
+        }
 
 
 
+    }
+
+    fun btnSiguiente(vista:View){
+        val ventana:Intent = Intent(applicationContext,ListViewApp::class.java)
+        startActivity(ventana)
     }
 
 }
